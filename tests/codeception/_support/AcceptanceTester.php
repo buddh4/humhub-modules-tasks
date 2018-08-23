@@ -7,6 +7,8 @@
  */
 
 namespace tasks;
+use humhub\components\ActiveRecord;
+use humhub\modules\notification\models\Notification;
 
 /**
  * Inherited Methods
@@ -26,6 +28,21 @@ namespace tasks;
 class AcceptanceTester extends \AcceptanceTester
 {
     use _generated\AcceptanceTesterActions;
+
+    public function assertHasNoNotification($class, ActiveRecord $source, $originator_id = null, $target_id = null, $msg = '')
+    {
+        $notificationQuery = Notification::find()->where(['class' => $class, 'source_class' => $source->className(), 'source_pk' => $source->getPrimaryKey()]);
+
+        if ($originator_id != null) {
+            $notificationQuery->andWhere(['originator_user_id' => $originator_id]);
+        }
+
+        if($target_id != null) {
+            $notificationQuery->andWhere(['user_id' => $target_id]);
+        }
+
+        $this->assertEmpty($notificationQuery->all(), $msg);
+    }
 
    /**
     * Define custom actions here
