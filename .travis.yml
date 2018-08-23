@@ -23,6 +23,9 @@ env:
     - HUMHUB_VERSION=v1.2.4
 
 matrix:
+  exclude:
+    - php: '7.2'
+      env: HUMHUB_VERSION=v1.2.4
   fast_finish: true
 
 
