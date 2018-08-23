@@ -20,7 +20,6 @@ env:
   global:
     - HUMHUB_PATH=/opt/humhub
   matrix:
-    - HUMHUB_VERSION=master
     - HUMHUB_VERSION=v1.2.4
 
 matrix:
