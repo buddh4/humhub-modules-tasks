@@ -19,12 +19,7 @@ fi
 
 cd ${HUMHUB_PATH}/protected/humhub/tests
 
-if [ "${HUMHUB_VERSION}" != 'v1.2.5' ] ; then
-  sed -i -e "s|'installed' => true,|'installed' => true,\n\t'moduleAutoloadPaths' => ['$(dirname $old)']|g" config/common.php
-else
-  sed -i -e "s|'moduleAutoloadPaths' => \['/home/travis/build/humhub'\],|'moduleAutoloadPaths' => ['$(dirname $old)']|g" config/common.php
-  cat config/common.php
-fi
+sed -i -e "s|'installed' => true,|'installed' => true,\n\t'moduleAutoloadPaths' => ['$(dirname $old)']|g" config/common.php
 
 mysql -e 'CREATE DATABASE humhub_test;'
 php codeception/bin/yii migrate/up --includeModuleMigrations=1 --interactive=0
